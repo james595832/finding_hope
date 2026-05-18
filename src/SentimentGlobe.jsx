@@ -2193,7 +2193,7 @@ export default function SentimentGlobe() {
                       display:"flex",
                       flexWrap:"wrap",
                       alignItems:"baseline",
-                      justifyContent:"space-between",
+                      justifyContent:"flex-start",
                       gap:"8px 16px",
                     }}
                   >
