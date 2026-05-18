@@ -30,7 +30,7 @@ export function buildGlobeLabels(countries, sentimentColor, hoveredId = null) {
       text,
       color: col,
       arousal: c.arousal,
-      alt: isHover ? 0.11 + c.arousal * 0.12 : 0.09 + c.arousal * 0.1,
+      alt: isHover ? 0.008 : 0.004,
       size: isHover ? 0.78 + c.arousal * 0.6 : 0.62 + c.arousal * 0.55,
     };
   });

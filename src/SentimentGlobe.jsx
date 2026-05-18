@@ -651,7 +651,7 @@ export default function SentimentGlobe() {
         country: c,
         color: isInd ? sentimentColor(c.valence) : sentimentColor(c.valence),
         altitude: isInd ? (0.15 + heightNorm * 0.8) : 0.001,
-        radius: isInd ? 1.4 : 0.8,
+        radius: isInd ? 0.12 : 0.8,
         arousal: c.arousal,
       };
     });
@@ -1635,13 +1635,14 @@ export default function SentimentGlobe() {
               pointerEvents:"none",
             }}
           >
-            <div style={{ display:"flex", flexDirection:"column", gap:6, pointerEvents:"auto" }}>
+            <div style={{ display:"flex", flexDirection:"column", gap:2, pointerEvents:"auto" }}>
               <div
                 style={{
                   display: "flex",
                   alignItems: "baseline",
                   gap: "2px",
                   pointerEvents: "auto",
+                  marginBottom: 6,
                 }}
               >
                 <span
@@ -1669,6 +1670,23 @@ export default function SentimentGlobe() {
                 }}
               >
                 Hard headlines, one hope each · {REGION_COUNT} regions
+              </span>
+              <span
+                style={{
+                  fontFamily:FONT.display,
+                  fontSize:CAP_SM,
+                  letterSpacing:"0.04em",
+                  textTransform:"none",
+                  color:LABEL_SOFT,
+                  textShadow:"0 0 14px rgba(232,228,219,0.85)",
+                  opacity: 0.65,
+                }}
+              >
+                {liveSource === "live" || liveSource === "fallback"
+                  ? dataTimestamp
+                    ? `${liveSource === "live" ? "Live API" : "Simulated"} sequence · ${new Date(dataTimestamp).getHours().toString().padStart(2, '0')}:${new Date(dataTimestamp).getMinutes().toString().padStart(2, '0')}`
+                    : `Feed sequence`
+                  : `Connecting…`}
               </span>
             </div>
             <div style={{ display: "flex", gap: "24px", alignItems: "center", pointerEvents: "auto" }}>
@@ -1721,45 +1739,24 @@ export default function SentimentGlobe() {
               className="ts-globe-mount"
               style={{ position:"absolute", inset:0, zIndex:0 }}
             />
+            {/* User Instruction */}
             <div
-              className="ts-live-status"
-              aria-live="polite"
               style={{
                 position:"absolute",
-                bottom:STACK * 3,
-                right:GUTTER,
+                bottom:STACK * 4,
+                left:"50%",
+                transform:"translateX(-50%)",
                 zIndex:5,
                 pointerEvents:"none",
-                maxWidth:"min(280px, 42vw)",
-                textAlign:"right",
-                padding:`${STACK - 1}px ${STACK + 3}px`,
-                border:"1px solid rgba(30,28,26,0.12)",
-                background:"rgba(255,252,247,0.82)",
-                animation:"fadeIn 1s ease 0.6s both",
+                textAlign:"center",
+                opacity: 0.6,
+                fontFamily:FONT.display,
+                fontSize:CAP_SM,
+                letterSpacing:"0.04em",
+                color:INK,
               }}
             >
-              <span
-                style={{
-                  fontFamily:FONT.display,
-                  fontSize:CAP_SM,
-                  letterSpacing:"0.03em",
-                  textTransform:"none",
-                  color:LABEL,
-                  lineHeight:1.4,
-                  textShadow:"0 0 10px rgba(232,228,219,0.9)",
-                }}
-                title={
-                  liveSource === "fallback"
-                    ? "Regions use the built-in set unless your host connects a model-backed API (see About)."
-                    : undefined
-                }
-              >
-                {liveSource === "live" || liveSource === "fallback"
-                  ? dataTimestamp
-                    ? `${liveSource === "live" ? "Live API" : "Simulated"} sequence · ${new Date(dataTimestamp).getHours().toString().padStart(2, '0')}:${new Date(dataTimestamp).getMinutes().toString().padStart(2, '0')}`
-                    : `Feed sequence`
-                  : `Connecting…`}
-              </span>
+              Click and drag to rotate
             </div>
             {false && viewMode === "indicator" && threadTooltip && (
               <div
