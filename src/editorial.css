@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&display=swap');
+
 /* Global editorial utilities (globe + About). */
 :focus-visible {
   outline: 2px solid currentColor;
@@ -65,4 +67,36 @@
   border-color: rgba(30, 28, 26, 0.8);
   background: rgba(30, 28, 26, 0.05);
   transform: scale(1.05);
+}
+
+/* Responsive Editorial Grid */
+.editorial-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  margin-bottom: 8rem;
+}
+
+@media (min-width: 768px) {
+  .editorial-grid {
+    grid-template-columns: repeat(12, 1fr);
+    gap: 4rem;
+  }
+}
+
+.col-left {
+  grid-column: 1 / -1;
+}
+
+.col-right {
+  grid-column: 1 / -1;
+}
+
+@media (min-width: 768px) {
+  .col-left {
+    grid-column: 1 / span 5;
+  }
+  .col-right {
+    grid-column: 7 / span 5;
+  }
 }

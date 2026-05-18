@@ -281,7 +281,7 @@ export default function MobileSentimentList({ countries, onWordClick }) {
                                 textAlign: "left",
                                 background: "transparent",
                                 border: "none",
-                                padding: "4px 2px",
+                                padding: useItalic ? "4px 8px 4px 4px" : "4px 6px",
                                 margin: 0,
                               }}
                             >

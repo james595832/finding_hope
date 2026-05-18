@@ -1646,12 +1646,12 @@ export default function SentimentGlobe() {
               >
                 <span
                   style={{
-                    fontFamily:FONT.title,
-                    fontWeight:800,
-                    fontSize:"clamp(1.15rem, 2.6vw, 1.6rem)",
-                    letterSpacing:"-0.04em", // Neue Montreal style tight tracking
-                    lineHeight:1.02,
-                    color:INK,
+                    fontFamily: "'Caveat', cursive",
+                    fontWeight: 700,
+                    fontSize: "clamp(1.5rem, 3.5vw, 2.4rem)",
+                    letterSpacing: "0.02em",
+                    lineHeight: 1.02,
+                    color: INK,
                     textTransform:"none",
                   }}
                 >
@@ -2379,7 +2379,7 @@ export default function SentimentGlobe() {
                               background:"transparent",
                               border:"none",
                               cursor:"pointer",
-                              padding:"4px 2px",
+                              padding: useItalic ? "4px 8px 4px 4px" : "4px 6px",
                               margin:0,
                               transition:"opacity .15s, transform .15s",
                               animation:`wordIn .45s ease ${(i * 0.04).toFixed(2)}s both`,

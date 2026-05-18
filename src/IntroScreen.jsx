@@ -59,6 +59,25 @@ export default function IntroScreen({ onEnter }) {
         pointerEvents: isFading ? 'none' : 'auto',
       }}
     >
+      {/* Static Curved SVG Globe Watermark */}
+      <div 
+        style={{
+          position: 'absolute',
+          bottom: '-35vh',
+          left: '50%',
+          transform: 'translateX(-50%)',
+          width: '150vw',
+          height: '70vh',
+          borderRadius: '50% 50% 0 0',
+          backgroundImage: "url('/curved-globe.svg')",
+          backgroundSize: 'cover',
+          backgroundPosition: 'center top',
+          opacity: 0.25, // Increased for visibility
+          pointerEvents: 'none',
+          zIndex: 0,
+          mixBlendMode: 'multiply'
+        }}
+      />
       <div
         style={{
           display: 'flex',
@@ -71,10 +90,10 @@ export default function IntroScreen({ onEnter }) {
         <h1
           style={{
             margin: 0,
-            fontFamily: FONT.title,
-            fontWeight: 800,
-            fontSize: 'clamp(3rem, 7vw, 5rem)',
-            letterSpacing: '-0.04em',
+            fontFamily: "'Caveat', cursive", // Previewing handwritten style
+            fontWeight: 700,
+            fontSize: 'clamp(4rem, 10vw, 7rem)', // Handwritten fonts need to be slightly larger
+            letterSpacing: '0.02em', // Handwritten fonts need normal tracking
             color: INK,
             textShadow: '0 0 40px rgba(232,228,219,0.9)',
           }}
