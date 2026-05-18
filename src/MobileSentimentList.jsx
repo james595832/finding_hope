@@ -229,14 +229,14 @@ export default function MobileSentimentList({ countries, onWordClick }) {
                       style={{
                         display: "flex",
                         flexWrap: "wrap",
-                        alignItems: "baseline",
-                        gap: "6px 10px",
-                        rowGap: 10,
+                        alignItems: "center",
+                        alignContent: "flex-start",
+                        gap: "4px 8px",
                       }}
                     >
                       {country.words.map((word, i) => {
                         const nW = country.words.length;
-                        const fontSize = 16 + (1 - i / Math.max(nW - 1, 1)) * 16; // slightly smaller spread for mobile
+                        const fontSize = 14 + (1 - i / Math.max(nW - 1, 1)) * 10; // smaller spread for mobile
                         const hint = valenceHintColor(word.vh);
                         const ink = word.isHope ? HOPE_GOLD : word.c;
                         const useItalic = Boolean(word.it && word.w <= 400);
@@ -246,18 +246,17 @@ export default function MobileSentimentList({ countries, onWordClick }) {
                             key={`${word.t}-${i}`}
                             style={{
                               display: "inline-flex",
-                              alignItems: "baseline",
-                              gap: hint ? 6 : 0,
+                              alignItems: "center",
+                              gap: hint ? 4 : 0,
                             }}
                           >
                             {hint ? (
                               <span
                                 style={{
                                   width: 4,
-                                  minHeight: Math.round(Math.max(16, fontSize * 0.65)),
+                                  height: Math.round(Math.max(14, fontSize * 0.7)),
                                   background: hint,
                                   flexShrink: 0,
-                                  marginTop: 2,
                                   borderRadius: 1,
                                 }}
                                 aria-hidden
@@ -277,11 +276,11 @@ export default function MobileSentimentList({ countries, onWordClick }) {
                                 letterSpacing: tr(word.w, useItalic),
                                 color: ink,
                                 opacity: Math.max(word.op, word.isHope ? 0.98 : 0.88),
-                                lineHeight: 1.1,
+                                lineHeight: 1,
                                 textAlign: "left",
                                 background: "transparent",
                                 border: "none",
-                                padding: useItalic ? "4px 8px 4px 4px" : "4px 6px",
+                                padding: useItalic ? "4px 6px 4px 2px" : "4px 2px",
                                 margin: 0,
                               }}
                             >

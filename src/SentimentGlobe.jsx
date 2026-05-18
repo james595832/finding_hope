@@ -2327,34 +2327,34 @@ export default function SentimentGlobe() {
                     style={{
                       display:"flex",
                       flexWrap:"wrap",
-                      alignItems:"baseline",
-                      gap:"6px 10px",
-                      rowGap:10,
-                      lineHeight:1.2,
+                      alignItems:"center", // Centers items vertically on each flex line to reduce bounciness
+                      alignContent: "flex-start",
+                      gap:"4px 8px", // Tighter gaps
+                      lineHeight: 1,
                       maxHeight:"min(50vh, 480px)",
                       overflowY:"auto",
                     }}
                   >
                     {selected.words.map((word, i) => {
                       const nW = selected.words.length;
-                      const fontSize = 16 + (1 - i / Math.max(nW - 1, 1)) * 22;
+                      // Reduced max font size from 38 to 26 so long words don't force empty lines
+                      const fontSize = 14 + (1 - i / Math.max(nW - 1, 1)) * 12;
                       const hint = valenceHintColor(word.vh);
                       const ink = word.isHope ? HOPE_GOLD : word.c;
                       const useItalic = Boolean(word.it && word.w <= 400);
                       return (
                         <span
                           key={`${word.t}-${i}`}
-                          style={{ display:"inline-flex", alignItems:"baseline", gap: hint ? 6 : 0, maxWidth:"100%" }}
+                          style={{ display:"inline-flex", alignItems:"center", gap: hint ? 4 : 0, maxWidth:"100%" }}
                         >
                           {hint ? (
                             <span
                               title={word.vh != null ? `Word valence hint ${word.vh.toFixed(2)}` : undefined}
                               style={{
                                 width:4,
-                                minHeight: Math.round(Math.max(18, fontSize * 0.65)),
+                                height: Math.round(Math.max(14, fontSize * 0.7)),
                                 background: hint,
                                 flexShrink:0,
-                                marginTop:3,
                                 opacity:0.95,
                                 borderRadius:1,
                               }}
@@ -2374,12 +2374,12 @@ export default function SentimentGlobe() {
                               textTransform:"none",
                               color: ink,
                               opacity: Math.max(word.op, word.isHope ? 0.98 : 0.88),
-                              lineHeight:1.1,
+                              lineHeight:1,
                               textAlign:"left",
                               background:"transparent",
                               border:"none",
                               cursor:"pointer",
-                              padding: useItalic ? "4px 8px 4px 4px" : "4px 6px",
+                              padding: useItalic ? "4px 6px 4px 2px" : "4px 2px",
                               margin:0,
                               transition:"opacity .15s, transform .15s",
                               animation:`wordIn .45s ease ${(i * 0.04).toFixed(2)}s both`,
