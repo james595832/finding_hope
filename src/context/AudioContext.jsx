@@ -62,6 +62,12 @@ export const AudioProvider = ({ children }) => {
     }
   }, [getEngine, isInitialized]);
 
+  const playHoverTick = useCallback(() => {
+    if (isInitialized) {
+      getEngine().playHoverTick();
+    }
+  }, [getEngine, isInitialized]);
+
   const value = {
     isInitialized,
     isMuted,
@@ -69,7 +75,8 @@ export const AudioProvider = ({ children }) => {
     toggleMute,
     unmute,
     setSentiment,
-    playHopeChime
+    playHopeChime,
+    playHoverTick
   };
 
   return (

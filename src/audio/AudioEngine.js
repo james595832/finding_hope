@@ -214,4 +214,28 @@ export class AudioEngine {
     osc.start(now);
     osc.stop(now + 4.0);
   }
+
+  // Triggered when cursor moves over a country dot
+  playHoverTick() {
+    if (!this.isInitialized || this.isMuted) return;
+
+    const osc = this.ctx.createOscillator();
+    const gain = this.ctx.createGain();
+
+    osc.type = 'triangle';
+    osc.frequency.value = 1600; // Soft high-mid tactile click
+
+    osc.connect(gain);
+    gain.connect(this.masterGain);
+
+    const now = this.ctx.currentTime;
+    
+    // Envelope: Instant decay (15ms) for clicky texture
+    gain.gain.setValueAtTime(0, now);
+    gain.gain.linearRampToValueAtTime(0.04, now + 0.002);
+    gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.02);
+
+    osc.start(now);
+    osc.stop(now + 0.03);
+  }
 }

@@ -405,7 +405,7 @@ export default function SentimentGlobe() {
   const [viewMode, setViewMode] = useState("hope");
   const themeNetwork = useMemo(() => buildThemeNetwork(countries), [countries]);
   const isMobile = useMediaQuery("(max-width: 768px)");
-  const { isMuted, toggleMute, setSentiment, playHopeChime } = useAudio();
+  const { isMuted, toggleMute, setSentiment, playHopeChime, playHoverTick } = useAudio();
   const selectedTheme = selectedThemeKey ? themeNetwork.themesByKey.get(selectedThemeKey) : null;
 
   countriesRef.current = countries;
@@ -413,6 +413,15 @@ export default function SentimentGlobe() {
   themeNetworkRef.current = themeNetwork;
   viewModeRef.current = viewMode;
   ohMomentActiveRef.current = ohMomentActive;
+
+  // Sound feedback on hover change (ticks when entering or moving to a different region)
+  const lastHoveredIdRef = useRef(null);
+  useEffect(() => {
+    if (hovered && hovered !== lastHoveredIdRef.current) {
+      playHoverTick();
+    }
+    lastHoveredIdRef.current = hovered;
+  }, [hovered, playHoverTick]);
 
   useEffect(() => {
     let activeCountry = null;
