@@ -400,6 +400,7 @@ export default function SentimentGlobe() {
   const [hovered, setHovered] = useState(null);
   const [paintWord, setPaintWord] = useState(null);
   const [paintIn, setPaintIn] = useState(false);
+  const [globeInstance, setGlobeInstance] = useState(null);
   // "hope"    → gold altitude poles per region (default; the artistic premise of the piece)
   // "threads" → editorial blue/red arcs between regions (the original decorative reading)
   const [viewMode, setViewMode] = useState("hope");
@@ -649,7 +650,7 @@ export default function SentimentGlobe() {
   }, [selectedThemeKey, themeNetwork]);
 
   useEffect(() => {
-    const g = sceneRef.current.globe;
+    const g = globeInstance || sceneRef.current.globe;
     if (!g) return;
     const pts = countries.map((c) => {
       const isInd = viewMode === "indicator";
@@ -669,13 +670,13 @@ export default function SentimentGlobe() {
       .pointRadius("radius")
       .arcsData([])
       .pathsData(viewMode === "hope" ? buildGlobeHopeSpikes(countries) : []);
-  }, [countries, viewMode]);
+  }, [globeInstance, countries, viewMode]);
 
   useEffect(() => {
-    const g = sceneRef.current.globe;
+    const g = globeInstance || sceneRef.current.globe;
     if (!g) return;
     g.labelsData(buildGlobeLabels(countries, sentimentColor, hovered));
-  }, [countries, hovered]);
+  }, [globeInstance, countries, hovered]);
 
   const applySelectionRings = useCallback((g) => {
     if (!g) return;
@@ -696,8 +697,8 @@ export default function SentimentGlobe() {
   }, []);
 
   useEffect(() => {
-    applySelectionRings(sceneRef.current.globe);
-  }, [selected, applySelectionRings]);
+    applySelectionRings(globeInstance || sceneRef.current.globe);
+  }, [globeInstance, selected, applySelectionRings]);
 
   const rebuildThreadMeshes = useCallback(() => {
     const scene = sceneRef.current.scene;
@@ -773,7 +774,7 @@ export default function SentimentGlobe() {
     return () => {
       cancelled = true;
     };
-  }, [countries]);
+  }, [globeInstance, countries]);
 
   // ── Three.js + three-globe setup ──────────────────────────────────────────
   useEffect(() => {
@@ -1221,6 +1222,7 @@ export default function SentimentGlobe() {
       scene.add(Globe);
       Globe.rendererSize(new THREE.Vector2(el.clientWidth || 800, el.clientHeight || 600));
       sceneRef.current.globe = Globe;
+      setGlobeInstance(Globe);
       sceneRef.current.globeMaterial = globeMat;
       applySelectionRings(Globe);
       rebuildThreadMeshes();
@@ -1245,6 +1247,7 @@ export default function SentimentGlobe() {
       renderer.domElement.removeEventListener("pointercancel", finishPointer);
       ro.disconnect();
       sceneRef.current.globe = null;
+      setGlobeInstance(null);
       sceneRef.current.globeMaterial = null;
       sceneRef.current.scene = null;
       globeTextureBootRef.current = false;
@@ -1267,7 +1270,7 @@ export default function SentimentGlobe() {
       renderer.dispose();
       if (el.contains(renderer.domElement)) el.removeChild(renderer.domElement);
     };
-  }, [applySelectionRings]);
+  }, [applySelectionRings, isMobile]);
 
   const capturePoster = useCallback(async (country) => {
     if (!country) return;
